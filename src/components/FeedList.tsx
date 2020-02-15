@@ -61,6 +61,7 @@ export function FeedList<T>({
         }
         return (
           <div
+            key={index}
             style={{
               ...style,
               ...rowStaticStyle,

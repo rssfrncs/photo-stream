@@ -24,4 +24,10 @@ export type Message =
       payload: {
         images: Image[];
       };
+    }
+  | {
+      type: "search value changed";
+      payload: {
+        value: string;
+      };
     };

@@ -6,11 +6,18 @@ import { store, useTDispatch, useTSelector } from "./store/";
 import { Provider } from "react-redux";
 import { FeedList } from "./components/FeedList";
 import { Card } from "./components/Card";
+import { Space } from "./components/Space";
 import { render } from "react-dom";
 import useMeasure from "react-use-measure";
 import { Image } from "./store/effects";
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import { Portal } from "react-portal";
+import { Search } from "./components/Search";
+import {
+  selectCurrentSearchValue,
+  selectFocusedCard,
+  selectImages
+} from "./store/selectors";
 
 function App() {
   return (
@@ -22,10 +29,9 @@ function App() {
 
 function Main() {
   const dispatch = useTDispatch();
-  const images = useTSelector(state => state.images);
-  const focusedCard = useTSelector(state =>
-    state.images.find(image => image.id === state.focusedCardId)
-  );
+  const images = useTSelector(selectImages);
+  const focusedCard = useTSelector(selectFocusedCard);
+  const currentSearchValue = useTSelector(selectCurrentSearchValue);
   const [ref, { width, height }] = useMeasure();
   const columns = React.useMemo(
     () => (width <= 500 ? 1 : width <= 768 ? 2 : 3),
@@ -57,8 +63,22 @@ function Main() {
         width: 100%;
         height: 100%;
         flex: 1;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: flex-start;
       `}
     >
+      <Search
+        value={currentSearchValue || ""}
+        onSearchChanged={searchValue =>
+          void dispatch({
+            type: "search value changed",
+            payload: { value: searchValue }
+          })
+        }
+      />
+      <Space />
       <div
         ref={ref}
         css={css`

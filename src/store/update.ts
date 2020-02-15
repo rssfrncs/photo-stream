@@ -27,6 +27,12 @@ export function update(model: Model = initialModel(), message: Message): Model {
         focusedCardId: null
       };
     }
+    case "search value changed": {
+      return {
+        ...model,
+        currentSearchValue: message.payload.value
+      };
+    }
     default: {
       return model;
     }

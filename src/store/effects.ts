@@ -19,7 +19,7 @@ function* fetchFeedSaga() {
 }
 async function fetchFeedPaginated(page: number) {
   const data: Image[] = await fetch(
-    `https://api.unsplash.com/photos/?client_id=${process.env.UNSPLASH_PUBLIC_KEY}&page=${page}`
+    `https://api.unsplash.com/photos/?client_id=${process.env.REACT_APP_UNSPLASH_PUBLIC_KEY}&page=${page}`
   ).then(r => r.json());
   return data;
 }
