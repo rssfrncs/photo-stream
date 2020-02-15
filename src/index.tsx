@@ -43,14 +43,15 @@ function App() {
 }
 
 function Main() {
+  // adaptive values
   const { effectiveConnectionType } = useNetworkStatus();
   const { numberOfLogicalProcessors } = useHardwareConcurrency();
+  // redux
   const dispatch = useTDispatch();
   const images = useTSelector(selectImages);
   const focusedCard = useTSelector(selectFocusedCard);
   const currentSearchValue = useTSelector(selectCurrentSearchValue);
   const [ref, { width, height }] = useMeasure();
-  console.log(numberOfLogicalProcessors);
   const columns = React.useMemo(
     () =>
       numberOfLogicalProcessors < 4
