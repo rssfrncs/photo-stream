@@ -19,6 +19,7 @@ import {
   selectImages
 } from "./store/selectors";
 import { Button } from "./components/Button";
+import { useNetworkStatus } from "react-adaptive-hooks/network";
 
 const theme = {
   radius: "2px",
@@ -41,6 +42,7 @@ function App() {
 }
 
 function Main() {
+  const { effectiveConnectionType } = useNetworkStatus();
   const dispatch = useTDispatch();
   const images = useTSelector(selectImages);
   const focusedCard = useTSelector(selectFocusedCard);
@@ -51,7 +53,7 @@ function Main() {
     [width]
   );
   const renderCard = React.useCallback(
-    (item: Image) => (
+    (item: Image, mode?: "focused" | "list") => (
       <Card
         id={item.id}
         authorLink={item.user.links.html}
@@ -61,13 +63,21 @@ function Main() {
         fallback={item.color}
         authorImage={item.user.profile_image.large}
         link={item.links.html}
-        uri={item.urls.regular}
+        uri={
+          effectiveConnectionType === "4g"
+            ? mode === "focused"
+              ? item.urls.large
+              : item.urls.regular
+            : mode === "focused"
+            ? item.urls.regular
+            : item.urls.thumb
+        }
         onCardClicked={cardId =>
           void dispatch({ type: "card clicked", payload: { cardId } })
         }
       />
     ),
-    [dispatch]
+    [dispatch, effectiveConnectionType]
   );
   return (
     <div
@@ -130,7 +140,7 @@ function Main() {
                 Close
               </Button>
               <Space />
-              {renderCard(focusedCard)}
+              {renderCard(focusedCard, "focused")}
             </div>
           </Portal>
         )}
