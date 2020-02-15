@@ -9,15 +9,14 @@ import { Card } from "./components/Card";
 import { Space } from "./components/Space";
 import { render } from "react-dom";
 import useMeasure from "react-use-measure";
+import ResizeObserver from "resize-observer-polyfill";
 import { Image } from "./store/effects";
-/* eslint-disable @typescript-eslint/no-unused-vars */
 import { Search } from "./components/Search";
 import {
   selectCurrentSearchValue,
   selectFocusedCard,
   selectImages
 } from "./store/selectors";
-import { Button } from "./components/Button";
 import { useNetworkStatus } from "react-adaptive-hooks/network";
 import { useHardwareConcurrency } from "react-adaptive-hooks/hardware-concurrency";
 import { FocusedCard } from "./components/FocusedCard";
@@ -27,7 +26,7 @@ const theme = {
   dark: "#313131",
   dark2: "#414141",
   light: "#fff",
-  light2: "#eee",
+  light2: "#bababa",
   paddingHorizontal: "20px",
   paddingVertical: "10px"
 };
@@ -51,7 +50,9 @@ function Main() {
   const images = useTSelector(selectImages);
   const focusedCard = useTSelector(selectFocusedCard);
   const currentSearchValue = useTSelector(selectCurrentSearchValue);
-  const [ref, { width, height }] = useMeasure();
+  const [ref, { width, height }] = useMeasure({
+    polyfill: ResizeObserver
+  });
   const columns = React.useMemo(
     () =>
       numberOfLogicalProcessors < 4

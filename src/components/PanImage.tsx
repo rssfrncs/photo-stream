@@ -4,6 +4,7 @@ import { animated, useSpring, interpolate, config } from "react-spring";
 import { useDrag } from "react-use-gesture";
 import { scaleLinear } from "d3-scale";
 import useMeasure from "react-use-measure";
+import ResizeObserver from "resize-observer-polyfill";
 
 type Props = {
   uri: string;
@@ -14,8 +15,11 @@ export const PanImage = React.memo(function CardComponent({
   uri,
   fallback
 }: Props) {
-  const [ref, { width: rWidth, height: rHeight }] = useMeasure();
+  const [ref, { width: rWidth, height: rHeight }] = useMeasure({
+    polyfill: ResizeObserver
+  });
   const [{ x, y }, set] = useSpring(() => ({
+    // start at centre (50%)
     x: 50,
     y: 50,
     config: { ...config.slow }
@@ -23,30 +27,21 @@ export const PanImage = React.memo(function CardComponent({
 
   // Set the drag hook and define component movement based on gesture data
   const bind = useDrag(
-    ({ movement: [mx, my], down, xy: [x, y], event }) => {
-      if (down) {
-        document.ontouchmove = function(e) {
-          e.preventDefault();
-        };
-        // console.log(mx, my, scaleX(mx), scaleY(my));
-        set({
-          x: mx,
-          y: my
-        });
-      } else {
-        document.ontouchmove = function() {
-          return true;
-        };
-      }
+    ({ movement: [mx, my], event }) => {
+      event?.preventDefault();
+      set({
+        x: mx,
+        y: my
+      });
     },
     {
       initial: () => [x.getValue(), y.getValue()],
       eventOptions: {},
       bounds: {
         left: 0,
+        top: 0,
         right: rWidth,
-        bottom: rHeight,
-        top: 0
+        bottom: rHeight
       },
       filterTaps: true
     }

@@ -51,8 +51,8 @@ export const FocusedCard = React.memo(function CardComponent({
           justify-content: center;
           flex-direction: column;
           background: rgba(255, 255, 255, 0.5);
-          backdrop-filter: blur(12px);
-          box-shadow: -1px 0 1px 0 rgba(0, 0, 0, 0.5);
+          backdrop-filter: blur(15px);
+          box-shadow: -1px 0 5px 0 rgba(0, 0, 0, 0.3);
         `}
         style={{ transform: x.interpolate(x => `translateX(${x})`) }}
       >

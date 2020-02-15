@@ -33,7 +33,7 @@ export const Card = React.memo(function CardComponent({
         display: flex;
         flex-direction: column;
         border-radius: ${theme.radius};
-        border: 1px solid ${theme.dark2};
+        border: 1px solid ${theme.light2};
       `}
     >
       <div
