@@ -64,10 +64,10 @@ export const Card = React.memo(function CardComponent({
             width: 35px;
             height: 35px;
             align-self: center;
-            border-radius: ${theme.radius};
+            border-radius: 35px;
             background-image: url(${authorImage});
             background-size: cover;
-            box-shadow: 0 1px 1px 0 black;
+            box-shadow: 0px 0px 1px 0 black;
           `}
         />
       </div>
