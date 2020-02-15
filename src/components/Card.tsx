@@ -1,6 +1,5 @@
 import React from "react";
 import { css } from "@emotion/core";
-import { PanImage } from "./PanImage";
 import { Button } from "./Button";
 import { Space } from "./Space";
 
@@ -12,7 +11,6 @@ export type CardProps = {
   link: string;
   author: string;
   authorImage: string;
-  description: string;
   onCardClicked?: (id: string) => void;
   fallback?: string;
 };
@@ -38,9 +36,15 @@ export const Card = React.memo(function CardComponent({
         border: 1px solid ${theme.dark2};
       `}
     >
-      <div style={{ width: "100%", flex: 2, background: fallback || "none" }}>
-        <PanImage uri={uri} />
-      </div>
+      <div
+        css={css`
+          flex: 1;
+          background-color: ${fallback || "transparent"};
+          background-image: url(${uri});
+          background-repeat: no-repeat;
+          background-size: cover;
+        `}
+      />
       <div
         css={theme => css`
           display: flex;
