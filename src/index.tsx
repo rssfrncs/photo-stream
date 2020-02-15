@@ -1,5 +1,5 @@
 import { css } from "@emotion/core";
-
+import { ThemeProvider } from "emotion-theming";
 import "./index.css";
 import * as React from "react";
 import { store, useTDispatch, useTSelector } from "./store/";
@@ -20,10 +20,22 @@ import {
 } from "./store/selectors";
 import { Button } from "./components/Button";
 
+const theme = {
+  radius: "2px",
+  dark: "#313131",
+  dark2: "#414141",
+  light: "#fff",
+  light2: "#eee",
+  paddingHorizontal: "20px",
+  paddingVertical: "10px"
+};
+
 function App() {
   return (
     <Provider store={store}>
-      <Main />
+      <ThemeProvider theme={theme}>
+        <Main />
+      </ThemeProvider>
     </Provider>
   );
 }

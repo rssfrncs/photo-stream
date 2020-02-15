@@ -10,12 +10,12 @@ export function Search({ value, onSearchChanged }: Props) {
   return (
     <input
       placeholder="Search"
-      css={css`
+      css={theme => css`
         border: none;
-        padding: 10px 20px;
-        border-radius: 2px;
-        background: #fff;
-        box-shadow: inset 0 0 2px 0 #414141;
+        padding: ${theme.paddingVertical} ${theme.paddingHorizontal};
+        border-radius: ${theme.radius};
+        background: ${theme.light};
+        box-shadow: inset 0 0 2px 0 ${theme.dark};
       `}
       type="text"
       value={value}

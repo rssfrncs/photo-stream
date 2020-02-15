@@ -28,14 +28,14 @@ export const Card = React.memo(function CardComponent({
 }: CardProps) {
   return (
     <div
-      css={css`
+      css={theme => css`
         height: 100%;
         width: 100%;
         overflow: hidden;
         display: flex;
         flex-direction: column;
-        border-radius: 4px;
-        box-shadow: 0 0 1px rgba(0, 0, 0, 0.5), -0 -0 1px #ffffff;
+        border-radius: ${theme.radius};
+        box-shadow: 0px 1px 1px 0 ${theme.dark2};
       `}
     >
       <div
@@ -52,29 +52,29 @@ export const Card = React.memo(function CardComponent({
           background-size: cover;
           background-position: center;
           background-repeat: no-repeat;
-          backdrop-filter: blur(15px);
+          backdrop-filter: blur(25px);
         `}
       />
       <div
-        css={css`
+        css={theme => css`
           flex: 1;
           align-items: flex-start;
           justify-content: flex-start;
           flex-direction: column;
           display: flex;
-          padding: 20px;
+          padding: ${theme.paddingVertical} ${theme.paddingHorizontal};
         `}
       >
         <div
-          css={css`
+          css={theme => css`
             flex: 0 0 50px;
             width: 50px;
             height: 50px;
             align-self: center;
-            border-radius: 10px;
+            border-radius: ${theme.radius};
             background-image: url(${authorImage});
             background-size: cover;
-            box-shadow: 0 0 1px #cdcbce, -0 -0 1px #ffffff;
+            box-shadow: 0 1px 1px 0 black;
           `}
         />
         <div
