@@ -94,21 +94,22 @@ function Main() {
               css={css`
                 position: fixed;
                 top: 0;
-                left: 0;
+                right: 0;
                 height: 100%;
-                width: 100%;
+                width: 75%;
                 display: flex;
                 align-items: center;
                 justify-content: center;
                 flex-direction: column;
                 background: rgba(255, 255, 255, 0.5);
                 backdrop-filter: blur(12px);
-                padding: 20px;
+                box-shadow: -1px 0 1px 0 rgba(0, 0, 0, 0.5);
               `}
               onClick={() =>
                 void dispatch({ type: "dismiss focused card clicked" })
               }
             >
+              <Space />
               <Button
                 onClick={() =>
                   void dispatch({ type: "dismiss focused card clicked" })
@@ -116,6 +117,7 @@ function Main() {
               >
                 Close
               </Button>
+              <Space />
               {renderCard(focusedCard)}
             </div>
           </Portal>
