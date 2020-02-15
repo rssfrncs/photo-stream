@@ -20,6 +20,7 @@ import {
 } from "./store/selectors";
 import { Button } from "./components/Button";
 import { useNetworkStatus } from "react-adaptive-hooks/network";
+import { useHardwareConcurrency } from "react-adaptive-hooks/hardware-concurrency";
 
 const theme = {
   radius: "2px",
@@ -43,14 +44,23 @@ function App() {
 
 function Main() {
   const { effectiveConnectionType } = useNetworkStatus();
+  const { numberOfLogicalProcessors } = useHardwareConcurrency();
   const dispatch = useTDispatch();
   const images = useTSelector(selectImages);
   const focusedCard = useTSelector(selectFocusedCard);
   const currentSearchValue = useTSelector(selectCurrentSearchValue);
   const [ref, { width, height }] = useMeasure();
+  console.log(numberOfLogicalProcessors);
   const columns = React.useMemo(
-    () => (width <= 500 ? 1 : width <= 768 ? 2 : 3),
-    [width]
+    () =>
+      numberOfLogicalProcessors < 4
+        ? 1
+        : width <= 500
+        ? 1
+        : width <= 768
+        ? 2
+        : 3,
+    [width, numberOfLogicalProcessors]
   );
   const renderCard = React.useCallback(
     (item: Image, mode?: "focused" | "list") => (
