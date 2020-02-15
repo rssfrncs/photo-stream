@@ -8,8 +8,8 @@ export default {
 
 export const Default = () => {
   return (
-    <div style={{ height: 300, width: 300 }}>
-      <PanImage uri="https://placehold.it/1000" range={[300, 300]} />
+    <div style={{ height: 100, width: 300 }}>
+      <PanImage uri="https://c4.wallpaperflare.com/wallpaper/980/1004/1005/color-apple-gradient-logo-wallpaper-preview.jpg" />
     </div>
   );
 };

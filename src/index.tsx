@@ -11,7 +11,6 @@ import { render } from "react-dom";
 import useMeasure from "react-use-measure";
 import { Image } from "./store/effects";
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import { Portal } from "react-portal";
 import { Search } from "./components/Search";
 import {
   selectCurrentSearchValue,
@@ -21,6 +20,7 @@ import {
 import { Button } from "./components/Button";
 import { useNetworkStatus } from "react-adaptive-hooks/network";
 import { useHardwareConcurrency } from "react-adaptive-hooks/hardware-concurrency";
+import { FocusedCard } from "./components/FocusedCard";
 
 const theme = {
   radius: "2px",
@@ -76,9 +76,7 @@ function Main() {
         link={item.links.html}
         uri={
           effectiveConnectionType === "4g"
-            ? mode === "focused"
-              ? item.urls.raw
-              : item.urls.regular
+            ? item.urls.regular
             : mode === "focused"
             ? item.urls.regular
             : item.urls.thumb
@@ -122,38 +120,20 @@ function Main() {
         `}
       >
         {focusedCard && (
-          <Portal>
-            <div
-              css={css`
-                position: fixed;
-                top: 0;
-                right: 0;
-                height: 100%;
-                width: 90%;
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                flex-direction: column;
-                background: rgba(255, 255, 255, 0.5);
-                backdrop-filter: blur(12px);
-                box-shadow: -1px 0 1px 0 rgba(0, 0, 0, 0.5);
-              `}
-              onClick={() =>
-                void dispatch({ type: "dismiss focused card clicked" })
-              }
-            >
-              <Space />
-              <Button
-                onClick={() =>
-                  void dispatch({ type: "dismiss focused card clicked" })
-                }
-              >
-                Close
-              </Button>
-              <Space />
-              {renderCard(focusedCard, "focused")}
-            </div>
-          </Portal>
+          <FocusedCard
+            id={focusedCard.id}
+            authorLink={focusedCard.user.links.html}
+            author={focusedCard.user.username}
+            description={focusedCard.description}
+            title={focusedCard.id}
+            fallback={focusedCard.color}
+            authorImage={focusedCard.user.profile_image.large}
+            link={focusedCard.links.html}
+            uri={focusedCard.urls.regular}
+            onCardClicked={() =>
+              void dispatch({ type: "dismiss focused card clicked" })
+            }
+          />
         )}
         <FeedList
           items={images}

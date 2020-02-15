@@ -1,35 +1,54 @@
 import React from "react";
 import { css } from "@emotion/core";
-import { animated, useSpring, interpolate } from "react-spring";
+import { animated, useSpring, interpolate, config } from "react-spring";
 import { useDrag } from "react-use-gesture";
 import { scaleLinear } from "d3-scale";
+import useMeasure from "react-use-measure";
 
 type Props = {
   uri: string;
-  range: [number, number];
   fallback?: string;
 };
 
 export const PanImage = React.memo(function CardComponent({
   uri,
-  fallback,
-  range: [rWidth, rHeight]
+  fallback
 }: Props) {
+  const [ref, { width: rWidth, height: rHeight }] = useMeasure();
   const [{ x, y }, set] = useSpring(() => ({
-    x: 0,
-    y: 0,
-    config: { clamp: true }
+    x: 50,
+    y: 50,
+    config: { ...config.slow }
   }));
+
   // Set the drag hook and define component movement based on gesture data
   const bind = useDrag(
-    ({ movement: [mx, my], xy: [x, y] }) => {
-      set({
-        x: Math.max(0, Math.min(mx, rWidth)),
-        y: Math.max(0, Math.min(my, rHeight))
-      });
+    ({ movement: [mx, my], down, xy: [x, y], event }) => {
+      if (down) {
+        document.ontouchmove = function(e) {
+          e.preventDefault();
+        };
+        // console.log(mx, my, scaleX(mx), scaleY(my));
+        set({
+          x: mx,
+          y: my
+        });
+      } else {
+        document.ontouchmove = function() {
+          return true;
+        };
+      }
     },
     {
-      initial: () => [x.getValue(), y.getValue()]
+      initial: () => [x.getValue(), y.getValue()],
+      eventOptions: {},
+      bounds: {
+        left: 0,
+        right: rWidth,
+        bottom: rHeight,
+        top: 0
+      },
+      filterTaps: true
     }
   );
 
@@ -43,19 +62,22 @@ export const PanImage = React.memo(function CardComponent({
 
   return (
     <animated.div
+      ref={ref}
       {...bind()}
       css={css`
-        flex: 0 0 auto;
-        width: ${rWidth}px;
-        height: ${rHeight}px;
+        height: 100%;
+        width: 100%;
+        flex: 1 1 100%;
         background-color: ${fallback || "transparent"};
         background-image: url(${uri});
         background-repeat: no-repeat;
+        background-size: auto !important;
       `}
       style={{
+        touchAction: "none",
         backgroundPosition: interpolate(
           [x, y],
-          (x, y) => `${scaleX(x)}% ${scaleY(y)}%`
+          (x, y) => `${100 - scaleX(x)}% ${100 - scaleY(y)}%`
         )
       }}
     />
