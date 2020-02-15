@@ -69,7 +69,6 @@ function Main() {
         id={item.id}
         authorLink={item.user.links.html}
         author={item.user.username}
-        description={item.description}
         title={item.id}
         fallback={item.color}
         authorImage={item.user.profile_image.large}
