@@ -36,7 +36,7 @@ export type Image = {
   urls: {
     small: string;
     regular: string;
-    large: string;
+    raw: string;
     thumb: string;
   };
   links: {

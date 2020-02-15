@@ -77,7 +77,7 @@ function Main() {
         uri={
           effectiveConnectionType === "4g"
             ? mode === "focused"
-              ? item.urls.large
+              ? item.urls.raw
               : item.urls.regular
             : mode === "focused"
             ? item.urls.regular
@@ -129,7 +129,7 @@ function Main() {
                 top: 0;
                 right: 0;
                 height: 100%;
-                width: 75%;
+                width: 90%;
                 display: flex;
                 align-items: center;
                 justify-content: center;

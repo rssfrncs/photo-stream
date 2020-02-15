@@ -1,7 +1,6 @@
 import React from "react";
 import { action } from "@storybook/addon-actions";
 import { FeedList } from "./FeedList";
-import { Card } from "./Card";
 
 export default {
   title: "FeedList",
@@ -35,33 +34,6 @@ export const Default = () => {
               {item.toString()}
             </span>
           </div>
-        );
-      }}
-    />
-  );
-};
-
-export const ComposeWithCard = () => {
-  return (
-    <FeedList
-      height={400}
-      width={400}
-      items={[1, 2, 3, 4, 5, 6, 7]}
-      onEndReached={action("feed end reached")}
-      onStartReached={action("feed start reached")}
-      renderItem={item => {
-        return (
-          <Card
-            id={item.toString()}
-            onCardClicked={action(`card clicked`)}
-            author={`author ${item}`}
-            authorLink="na"
-            authorImage="na"
-            description={`description ${item}`}
-            link="https://placehold.it/1000x1000"
-            title={`title ${item}`}
-            uri="https://placehold.it/1000x1000"
-          />
         );
       }}
     />

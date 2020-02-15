@@ -1,5 +1,7 @@
 import React from "react";
 import { css } from "@emotion/core";
+import { PanImage } from "./PanImage";
+import useMeasure from "react-use-measure";
 
 export type CardProps = {
   id: string;
@@ -26,8 +28,10 @@ export const Card = React.memo(function CardComponent({
   onCardClicked,
   fallback
 }: CardProps) {
+  const [ref, { width }] = useMeasure();
   return (
     <div
+      ref={ref}
       css={theme => css`
         height: 100%;
         width: 100%;
@@ -38,23 +42,7 @@ export const Card = React.memo(function CardComponent({
         box-shadow: 0px 1px 1px 0 ${theme.dark2};
       `}
     >
-      <div
-        onClick={() => {
-          if (onCardClicked) onCardClicked(id);
-        }}
-        css={css`
-          flex: 1;
-          width: 100%;
-          align-self: center;
-          border-radius: 5;
-          background-color: ${fallback || "transparent"};
-          background-image: url(${uri});
-          background-size: cover;
-          background-position: center;
-          background-repeat: no-repeat;
-          backdrop-filter: blur(25px);
-        `}
-      />
+      <PanImage range={[width, 150]} uri={uri} />
       <div
         css={theme => css`
           flex: 1;
