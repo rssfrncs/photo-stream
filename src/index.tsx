@@ -18,6 +18,7 @@ import {
   selectFocusedCard,
   selectImages
 } from "./store/selectors";
+import { Button } from "./components/Button";
 
 function App() {
   return (
@@ -108,18 +109,13 @@ function Main() {
                 void dispatch({ type: "dismiss focused card clicked" })
               }
             >
-              <button
-                css={css`
-                  background: linear-gradient(145deg, #dde6e2, #ffffff);
-                  padding: 10px 20px;
-                  margin: 10px;
-                `}
+              <Button
                 onClick={() =>
                   void dispatch({ type: "dismiss focused card clicked" })
                 }
               >
                 Close
-              </button>
+              </Button>
               {renderCard(focusedCard)}
             </div>
           </Portal>

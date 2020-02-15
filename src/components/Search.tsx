@@ -12,10 +12,10 @@ export function Search({ value, onSearchChanged }: Props) {
       placeholder="Search"
       css={css`
         border: none;
-        padding: 10px;
-        border-radius: 4px;
-        background: #e6eeea;
-        box-shadow: inset 20px 20px 60px #c4cac7, inset -20px -20px 60px #ffffff;
+        padding: 10px 20px;
+        border-radius: 2px;
+        background: #fff;
+        box-shadow: inset 0 0 2px 0 #414141;
       `}
       type="text"
       value={value}
